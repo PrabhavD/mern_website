@@ -1,0 +1,29 @@
+{
+  "name": "mern_website",
+  "version": "1.0.0",
+  "description": "Modular List built using MERN Stack with various applications",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "server": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PrabhavD/mern_website.git"
+  },
+  "author": "Prabhav Desai",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PrabhavD/mern_website/issues"
+  },
+  "homepage": "https://github.com/PrabhavD/mern_website#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "concurrently": "^5.3.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.11.6"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
+}
