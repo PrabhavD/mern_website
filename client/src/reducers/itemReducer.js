@@ -8,7 +8,7 @@ const initialState = {
         {id: uuid(), name: 'ARTS 190'},
         {id: uuid(), name: 'Math 117'},
     ]
-}
+};
 
 export default function(state = initialState, action) {
     switch(action.type) {
@@ -19,4 +19,4 @@ export default function(state = initialState, action) {
         default: 
             return state;
     }
-}
+};
