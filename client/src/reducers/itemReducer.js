@@ -6,7 +6,7 @@ const initialState = {
         {id: uuid(), name: 'Math 115'},
         {id: uuid(), name: 'ECE 190'},
         {id: uuid(), name: 'ARTS 190'},
-        {id: uuid(), name: 'MATH 117'}
+        {id: uuid(), name: 'SCI'}
     ]
 };
 
