@@ -7,16 +7,11 @@ import {
 } from 'reactstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import {v4 as uuid} from 'uuid'; //temporary before connecting to database
+import { connect } from 'react-redux';
+import { getItems } from '../actions/itemActions';
+import PropTypes from 'prop-types';
 
 class ModularList extends Component {
-    state = {
-        items: [
-            {id: uuid(), name: 'Math 115'},
-            {id: uuid(), name: 'ECE 190'},
-            {id: uuid(), name: 'ARTS 190'},
-            {id: uuid(), name: 'Math 117'},
-        ]
-    }
 
     render() {
         const { items } = this.state;
@@ -60,6 +55,13 @@ class ModularList extends Component {
     }
 }
 
+ModularList.propTypes = {
+    getItems: PropTypes.func.isRequired,
+    item: PropTypes.object.isRequired   //map Redux state to prop
+}
 
+const mapStatetoProps = (state) => ({
+    item: state.item
+});
 
-export default ModularList;
+export default connect(mapStatetoProps, { getItems })(ModularList);
