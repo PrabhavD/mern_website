@@ -12,9 +12,12 @@ import { getItems } from '../actions/itemActions';
 import PropTypes from 'prop-types';
 
 class ModularList extends Component {
+    componentDidMount() {
+        this.props.getItems();
+    }
 
     render() {
-        const { items } = this.state;
+        const { items } = this.props.item;
         return (
             <Container>
                 <Button 
