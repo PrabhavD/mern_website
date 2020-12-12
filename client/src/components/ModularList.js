@@ -60,7 +60,7 @@ class ModularList extends Component {
 
 ModularList.propTypes = {
     getItems: PropTypes.func.isRequired,
-    item: PropTypes.object.isRequired   //map Redux state to prop
+    item: PropTypes.object.isRequired   //maps Redux state to prop
 }
 
 const mapStatetoProps = (state) => ({
