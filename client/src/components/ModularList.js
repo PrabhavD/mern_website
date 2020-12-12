@@ -6,14 +6,17 @@ import {
     Button
 } from 'reactstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import {v4 as uuid} from 'uuid'; //temporary before connecting to database
 import { connect } from 'react-redux';
-import { getItems } from '../actions/itemActions';
+import { getItems, deleteItem } from '../actions/itemActions';
 import PropTypes from 'prop-types';
 
 class ModularList extends Component {
     componentDidMount() {
         this.props.getItems();
+    }
+
+    onDeleteClick = (id) => {
+        this.props.deleteItem(id);
     }
 
     render() {
@@ -42,11 +45,9 @@ class ModularList extends Component {
                                         className="remove-btn"
                                         color="danger"
                                         size="sm"
-                                        onClick={() => {
-                                            this.setState(state => ({
-                                                items: state.items.filter(item => item.id !== id)
-                                            }));
-                                        }}>&times;</Button>
+                                        onClick={() => {this.onDeleteClick.bind(this, id)}}>
+                                        &times;
+                                    </Button>
                                     {name}
                                 </ListGroupItem>
                             </CSSTransition>
@@ -67,4 +68,7 @@ const mapStatetoProps = (state) => ({
     item: state.item
 });
 
-export default connect(mapStatetoProps, { getItems })(ModularList);
+export default connect(
+    mapStatetoProps, 
+    { getItems, deleteItem }
+)(ModularList);

@@ -6,3 +6,10 @@ export const getItems = () => {
         //payload after connecting to database
     };
 };
+
+export const deleteItem = (id) => {
+    return {
+        type: DELETE_ITEM,
+        payload: id
+    };
+};
