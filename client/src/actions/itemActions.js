@@ -8,7 +8,7 @@ export const getItems = () => dispatch => {
             type: GET_ITEMS,
             payload: res.data
         })
-    )
+    );
 };
 
 export const addItem = (item) => dispatch => {
@@ -17,7 +17,7 @@ export const addItem = (item) => dispatch => {
             type: ADD_ITEM,
             payload: res.data
         })
-    )    
+    );    
 };
 
 export const deleteItem = (id) => dispatch => {
@@ -26,11 +26,11 @@ export const deleteItem = (id) => dispatch => {
             type: DELETE_ITEM,
             payload: id
         })
-    )
+    );
 };
 
 export const setItemsLoading = () => {
     return {
         type: ITEMS_LOADING
-    }
-}
+    };
+};
