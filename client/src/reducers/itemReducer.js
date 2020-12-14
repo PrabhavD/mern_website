@@ -22,12 +22,12 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 items: [action.payload, ...state.items]
-            }
+            };
         case ITEMS_LOADING:
             return {
                 ...state,
                 loading: true
-            }
+            };
         default: 
             return state;
     }
