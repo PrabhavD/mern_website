@@ -29,7 +29,7 @@ router.post('/', (req, res) => {
 // access:          Public  -> make private later when adding auth
 router.delete('/:id', (req, res) => {
     Item.findById(req.params.id)
-        .them(item => item.remove().then(() => res.json({success: true})))
+        .then(item => item.remove().then(() => res.json({success: true})))
         .catch(err => res.status(404).json({sucess: false}));
 })
 
