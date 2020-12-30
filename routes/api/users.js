@@ -38,16 +38,21 @@ router.post('/', (req, res) => {
                         .then(user => {
                             
                             jwt.sign(
-                                { id: user.id }
-                            )
-
-                            res.json({
-                                user: {
-                                    id: user.id,
-                                    name: user.name,
-                                    email: user.email
+                                { id: user.id },
+                                config.get('jwtSecret'),
+                                { expiresIn: 3600 }, //token lasts for 1h
+                                (err, token) => {
+                                    if(err) throw err;
+                                    res.json({
+                                        token,
+                                        user: {
+                                            id: user.id,
+                                            name: user.name,
+                                            email: user.email
+                                        }
+                                    });
                                 }
-                            });
+                            )
                         });
                 })
             })
