@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 
 // route:           POST request to api/items
 // description:     Create an item
-// access:          Public  -> make private later when adding auth
+// access:          Private
 router.post('/', auth, (req, res) => {
     const newItem = new Item({
         name: req.body.name //date is automatically inserted
@@ -27,7 +27,7 @@ router.post('/', auth, (req, res) => {
 
 // route:           DELETE request to api/items:id
 // description:     Delete an item
-// access:          Public  -> make private later when adding auth
+// access:          Private
 router.delete('/:id', auth, (req, res) => {
     Item.findById(req.params.id)
         .then(item => item.remove().then(() => res.json({success: true})))
