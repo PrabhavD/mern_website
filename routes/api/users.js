@@ -4,10 +4,10 @@ const router = express.Router();
 //User Model
 const User = require('../../models/User');
 
-// route:           GET request to api/users
+// route:           POST request to api/users
 // description:     Register new user
 // access:          Public
-router.get('/', (req, res) => {
+router.post('/', (req, res) => {
     res.send('register');
 });
 
