@@ -21,23 +21,33 @@ class RegisterModal extends Component {
         email:'', 
         password:'',
         msg: null
-    }
+    };
 
     static propTypes = {
         isAuthenticated: PropTypes.bool,
         error: PropTypes.object.isRequired,
         register: PropTypes.func.isRequired
-    }
+    };
+
+    componentDidUpdate(prevProps) {
+        const { error } = this.props;
+        if(error !== prevProps.error) {
+            //Check for register error
+            if(error.id === "REGISTER_FAIL") {
+                this.setState({ msg: error.msg.msg })
+            }
+        }
+    };
 
     toggle = () => {
         this.setState ({
             modal: !this.state.modal
         });
-    }
+    };
 
     onChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
-    }
+    };
 
     onSubmit = (e) => {
         e.preventDefault();
@@ -54,7 +64,7 @@ class RegisterModal extends Component {
         //Attempt to register
         this.props.register(newUser);
 
-    }
+    };
 
     render() {
         return(
@@ -104,9 +114,9 @@ class RegisterModal extends Component {
                     </ModalBody>
                 </Modal>
             </div>
-        )
-    }
-}
+        );
+    };
+};
 
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
