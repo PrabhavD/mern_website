@@ -50,7 +50,7 @@ class RegisterModal extends Component {
             email,
             password
         };
-        
+
         //Attempt to register
         this.props.register(newUser);
 
@@ -93,7 +93,7 @@ class RegisterModal extends Component {
                                 type = "password"
                                 name="password"
                                 id="password"
-                                placeholder="Name"
+                                placeholder="Password"
                                 className="mb-3"
                                 onChange={this.onChange}/>
                                 <Button color="dark"  style={{marginTop: '2rem'}} block>
