@@ -8,7 +8,8 @@ import {
     FormGroup,
     Label,
     Input,
-    NavLink
+    NavLink,
+    Alert
 } from 'reactstrap'; 
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -34,7 +35,9 @@ class RegisterModal extends Component {
         if(error !== prevProps.error) {
             //Check for register error
             if(error.id === "REGISTER_FAIL") {
-                this.setState({ msg: error.msg.msg })
+                this.setState({ msg: error.msg.msg });
+            } else {
+                this.setState({ msg: null });
             }
         }
     };
@@ -78,6 +81,9 @@ class RegisterModal extends Component {
                 toggle={this.toggle}>
                     <ModalHeader toggle={this.toggle}>Register</ModalHeader>
                     <ModalBody>
+                        { this.state.msg ? (
+                            <Alert color="danger">{ this.state.msg }</Alert> 
+                        ) : null }
                         <Form onSubmit={this.onSubmit}>
                             <FormGroup>
                                 <Label for="name">Name</Label>
