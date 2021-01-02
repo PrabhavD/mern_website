@@ -11,7 +11,7 @@ const User = require('../../models/User');
 // description:     Register new user
 // access:          Public
 router.post('/', (req, res) => {
-    const { name, email, password} = req.body;
+    const { name, email, password } = req.body;
 
     //Simple validation
     if(!name || !email || !password) {
@@ -26,7 +26,7 @@ router.post('/', (req, res) => {
             const newUser = new User({
                 name, 
                 email,
-                password,
+                password
             });
 
             // Create salt & hash
