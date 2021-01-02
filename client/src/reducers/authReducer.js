@@ -50,8 +50,8 @@ export default function(state = initialState, action) {
                 user: null,
                 isAuthenticated: false,
                 isLoading: false
-            }
+            };
         default:
-            return state
+            return state;
     }
 }
