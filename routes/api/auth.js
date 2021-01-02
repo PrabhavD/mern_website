@@ -51,12 +51,12 @@ router.post('/', (req, res) => {
         })
 });
 
-// route:           GET api/auth/user
+// route:           GET request to api/auth/user
 // description:     Get user data
-// access:          Public
+// access:          Private
 router.get('/user', auth, (req, res) => {
     User.findById(req.user.id)
         .select('-password') //disregard password
-        .then(user => res.json(user))
+        .then(user => res.json(user));
 });
 module.exports = router;
