@@ -20,7 +20,7 @@ export const loadUser = () => (dispatch, getState) => {
         .get('/api/auth/user', tokenConfig(getState))
         .then(res => dispatch({
             type: USER_LOADED,
-            payload: res.data //object with user object and token itself
+            payload: res.data //user object and token itself
         }))
         .catch(err => {
             dispatch(returnErrors(err.response.data, err.response.status));
