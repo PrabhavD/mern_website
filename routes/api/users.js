@@ -15,6 +15,7 @@ router.post('/', (req, res) => {
 
     //Simple validation
     if(!name || !email || !password) {
+        //Bad request Status 400
         return res.status(400).json( { msg: 'Plese enter all fields'});
     }
 
@@ -29,7 +30,7 @@ router.post('/', (req, res) => {
                 password
             });
 
-            // Create salt & hash
+            // Create salt & hash; 10 rounds for proper safety/speed tradeoff
             bcrypt.genSalt(10, (err, salt) => {
                 bcrypt.hash(newUser.password, salt, (err, hash) => {
                     if(err) throw err;
