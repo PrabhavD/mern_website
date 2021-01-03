@@ -15,25 +15,35 @@ export const getItems = () => dispatch => {
         )
         .catch(err => 
             dispatch(returnErrors(err.response.data, err.response.state))
-        )
+        );
 };
 
 export const addItem = (item) => dispatch => {
-    axios.post('/api/items', item).then(res => 
-        dispatch({
-            type: ADD_ITEM,
-            payload: res.data
-        })
-    );    
+    axios
+        .post('/api/items', item)
+        .then(res => 
+            dispatch({
+                type: ADD_ITEM,
+                payload: res.data
+            })
+        )
+        .catch(err => 
+            dispatch(returnErrors(err.response.data, err.response.state))
+        );
 };
 
 export const deleteItem = id => dispatch => {
-    axios.delete(`/api/items/${id}`).then(res =>
-        dispatch({
-            type: DELETE_ITEM,
-            payload: id
-        })
-    );
+    axios
+        .delete(`/api/items/${id}`)
+        .then(res =>
+            dispatch({
+                type: DELETE_ITEM,
+                payload: id
+            })
+        )
+        .catch(err => 
+            dispatch(returnErrors(err.response.data, err.response.state))
+        );
 };
 
 export const setItemsLoading = () => {
