@@ -74,6 +74,9 @@ class LoginModal extends Component {
 
         //Attempt to Login
         this.props.login(user);
+
+        //Close modal
+        this.toggle()
     };
 
     render() {
