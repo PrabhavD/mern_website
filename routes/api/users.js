@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
 const config = require('config');
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 
 //User Model
 const User = require('../../models/User');
@@ -20,7 +20,7 @@ router.post('/', (req, res) => {
     }
 
     //Check for existing user
-    User.findOne({ email })
+    User.findOne({ email: email })
         .then(user => { 
             if(user) return res.status(400).json({ msg: 'User already exists'});
 
@@ -30,7 +30,7 @@ router.post('/', (req, res) => {
                 password
             });
 
-            // Create salt & hash; 10 rounds for proper safety/speed tradeoff
+            // Create salt & hash; 10 rounds for safety/speed tradeoff
             bcrypt.genSalt(10, (err, salt) => {
                 bcrypt.hash(newUser.password, salt, (err, hash) => {
                     if(err) throw err;
@@ -52,11 +52,11 @@ router.post('/', (req, res) => {
                                         }
                                     });
                                 }
-                            )
+                            );
                         });
-                })
-            })
-        })
+                });
+            });
+        });
 });
 
 module.exports = router;
