@@ -19,7 +19,7 @@ mongoose
         useCreateIndex: true
     }) //Adding new url parser
     .then(() => console.log('MongoDB Connected...'))
-    .catch(err => console.log(err));
+    .catch(err => console.err(err)); //console.log -> console.err
 
 // Use Routes
 app.use('/api/items', require('./routes/api/items'));
@@ -38,4 +38,4 @@ if(process.env.NODE_ENV === 'production') {
 
 const port = process.env.PORT || 5000;
 
- app.listen(port, () => console.log('Server started on port ${port}'));
+ app.listen(port, () => console.log(`Server started on port ${port}`));
