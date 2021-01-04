@@ -54,7 +54,7 @@ export const register = ({ name, email, password }) => dispatch => {
                 type: REGISTER_FAIL
             });
         });
-}
+};
 
 //Login User
 export const login = ({ email, password }) => dispatch => {
@@ -79,14 +79,14 @@ export const login = ({ email, password }) => dispatch => {
                 type: LOGIN_FAIL
             });
         });
-}
+};
 
 //Logout User
 export const logout = () => {
     return { 
         type: LOGOUT_SUCCESS
     }
-}
+};
 
 //Setup config/headers and token
 export const tokenConfig = getState => {
@@ -95,7 +95,7 @@ export const tokenConfig = getState => {
     //Headers
     const config = {
         headers: {
-            "Content-type": "application/json"
+            'Content-type': 'application/json'
         }
     }
     //If token, add to headers
@@ -104,4 +104,4 @@ export const tokenConfig = getState => {
     }
 
     return config;
-}
+};
