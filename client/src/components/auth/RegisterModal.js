@@ -1,146 +1,107 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-    Button,
-    Modal,
-    ModalHeader,
-    ModalBody,
-    Form,
-    FormGroup,
-    Label,
-    Input,
-    NavLink,
-    Alert
-} from 'reactstrap'; 
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { register } from '../../actions/authActions'
-import { clearErrors } from '../../actions/errorActions'
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  NavLink,
+  Alert
+} from 'reactstrap';
 
-class RegisterModal extends Component {
-    state = {
-        modal: false,
-        name: '',
-        email:'', 
-        password:'',
-        msg: null
-    };
+import { useSelector, useDispatch } from 'react-redux';
+import { register } from '../../actions/authActions';
+import { clearErrors } from '../../actions/errorActions';
 
-    static propTypes = {
-        isAuthenticated: PropTypes.bool,
-        error: PropTypes.object.isRequired,
-        register: PropTypes.func.isRequired,
-        clearErrors: PropTypes.func.isRequired
-    };
+export const RegisterModal = () => {
+  const dispatch = useDispatch();
+  const error = useSelector(state => state.error);
+  const auth = useSelector(state => state.auth);
 
-    componentDidUpdate(prevProps) {
-        const { error, isAuthenticated } = this.props;
-        if(error !== prevProps.error) {
-            //Check for register error
-            if(error.id === 'REGISTER_FAIL') {
-                this.setState({ msg: error.msg.msg });
-            } else {
-                this.setState({ msg: null });
-            }
-        }
+  const [modal, setModal] = useState(false);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [message, setMessage] = useState();
 
-        //If authenticated, close modal
-        if(this.state.modal) {
-            if(isAuthenticated) {
-                this.toggle();
-            }
-        }
-    };
+  useEffect(() => {
+    if (error.id === 'REGISTER_FAIL') {
+      setMessage(error.msg.msg);
+    } else {
+      setMessage(null);
+    }
+  }, [error]);
 
-    toggle = () => {
-        //Clear errors 
-        this.props.clearErrors();
-        this.setState ({
-            modal: !this.state.modal
-        });
-    };
+  useEffect(() => {
+    if (modal && auth.isAuthenticated) {
+      dispatch(clearErrors());
+      setModal(!modal);
+    }
+  }, [auth, modal, dispatch]);
 
-    onChange = (e) => {
-        this.setState({ [e.target.name]: e.target.value });
-    };
+  const toggle = () => {
+    dispatch(clearErrors());
+    setModal(!modal);
+  };
 
-    onSubmit = (e) => {
-        e.preventDefault();
+  const onSubmit = e => {
+    e.preventDefault();
+    console.log('Onclick pressed');
+    const newUser = { name, email, password };
+    dispatch(register(newUser));
+  };
 
-        const { name, email, password } = this.state;
-
-        //Create user object
-        const newUser = {
-            name,
-            email,
-            password
-        };
-
-        //Attempt to register
-        this.props.register(newUser);
-
-    };
-
-    render() {
-        return(
-            <div>
-                <NavLink onClick={this.toggle} href="#">
-                    Register
-                </NavLink>
-
-                <Modal
-                isOpen={this.state.modal}
-                toggle={this.toggle}>
-                    <ModalHeader toggle={this.toggle}>Register</ModalHeader>
-                    <ModalBody>
-                        { this.state.msg ? (
-                            <Alert color="danger">{ this.state.msg }</Alert> 
-                        ) : null }
-                        <Form onSubmit={this.onSubmit}>
-                            <FormGroup>
-                                <Label for="name">Name</Label>
-                                <Input 
-                                type = "text"
-                                name="name"
-                                id="name"
-                                placeholder="Name"
-                                className="mb-3"
-                                onChange={this.onChange}/>
-
-                                 <Label for="email">Email</Label>
-                                <Input 
-                                type = "email"
-                                name="email"
-                                id="email"
-                                placeholder="Email"
-                                className="mb-3"
-                                onChange={this.onChange}/>
-
-                                 <Label for="password">Password</Label>
-                                <Input 
-                                type = "password"
-                                name="password"
-                                id="password"
-                                placeholder="Password"
-                                className="mb-3"
-                                onChange={this.onChange}/>
-                                <Button color="dark" style={{marginTop: '2rem'}} block>
-                                    Register
-                                </Button>
-                            </FormGroup>
-                        </Form>
-                    </ModalBody>
-                </Modal>
-            </div>
-        );
-    };
+  return (
+    <div>
+      <NavLink onClick={toggle}>Register</NavLink>
+      <Modal isOpen={modal} toggle={toggle}>
+        <ModalHeader toggle={toggle}>Register</ModalHeader>
+        <ModalBody>
+          {message ? <Alert color="danger">{message}</Alert> : null}
+          <Form onSubmit={onSubmit}>
+            <FormGroup>
+              <Label for="name">Name</Label>
+              <Input
+                type="text"
+                name="name"
+                autoComplete="name"
+                id="name"
+                placeholder="Name"
+                className="mb-3"
+                onChange={e => setName(e.target.value)}
+              />
+              <Label for="email">Email</Label>
+              <Input
+                type="text"
+                name="email"
+                autoComplete="email"
+                id="email"
+                placeholder="Email"
+                className="mb-3"
+                onChange={e => setEmail(e.target.value)}
+              />
+              <Label for="password">Password</Label>
+              <Input
+                type="password"
+                name="password"
+                autoComplete="off"
+                id="password"
+                placeholder="Password"
+                className="mb-3"
+                onChange={e => setPassword(e.target.value)}
+              />
+              <Button color="dark" style={{ marginTop: '2rem' }} block>
+                Register
+              </Button>
+            </FormGroup>
+          </Form>
+        </ModalBody>
+      </Modal>
+    </div>
+  );
 };
 
-const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
-    error: state.error
-});
-
-export default connect(
-    mapStateToProps, 
-    { register, clearErrors }
-    )(RegisterModal);
+export default RegisterModal;
