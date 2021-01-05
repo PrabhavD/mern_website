@@ -1,85 +1,70 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import {
-    Button,
-    Modal,
-    ModalHeader,
-    ModalBody,
-    Form,
-    FormGroup,
-    Label,
-    Input
-} from 'reactstrap'; 
-import { connect } from 'react-redux';
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  Form,
+  FormGroup,
+  Label,
+  Input
+} from 'reactstrap';
+
+import { useDispatch, useSelector } from 'react-redux';
 import { addItem } from '../actions/itemActions';
 
-class ItemModal extends Component {
-    state = {
-        modal: false,
-        name: ''
-    }
+export const ItemModal = () => {
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 
-    toggle = () => {
-        this.setState ({
-            modal: !this.state.modal
-        });
-    }
+  const [modal, setModal] = useState(false);
+  const [name, setName] = useState('');
 
-    onChange = (e) => {
-        this.setState({ [e.target.name]: e.target.value });
-    }
+  const toggle = () => {
+    setModal(!modal);
+  };
 
-    onSubmit = (e) => {
-        e.preventDefault();
+  const onSubmit = e => {
+    e.preventDefault();
+    const newItem = {
+      name: name
+    };
+    dispatch(addItem(newItem));
+    toggle();
+  };
 
-        const newItem = {
-            name: this.state.name
-        }
+  return (
+    <div>
+      {isAuthenticated ? (
+        <Button color="dark" style={{ marginBottom: '2rem' }} onClick={toggle}>
+          Add Item
+        </Button>
+      ) : (
+        <h4 className="mb-3 ml-4">Please log in to manage items</h4>
+      )}
 
-        //Add item via addItem action
-        this.props.addItem(newItem);
+      <Modal isOpen={modal} toggle={toggle}>
+        <ModalHeader toggle={toggle}>Add to Shopping List</ModalHeader>
+        <ModalBody>
+          <Form onSubmit={onSubmit}>
+            <FormGroup>
+              <Label for="item">Item</Label>
+              <Input
+                type="text"
+                name="name"
+                id="item"
+                placeholder="Add shopping item"
+                onChange={e => setName(e.target.value)}
+              />
+              <Button color="dark" style={{ marginTop: '2rem' }} block>
+                Add Item
+              </Button>
+            </FormGroup>
+          </Form>
+        </ModalBody>
+      </Modal>
+    </div>
+  );
+};
 
-        //Close nodal
-        this.toggle();
-    }
-
-    render() {
-        return(
-            <div>
-                <Button 
-                color="dark"
-                style={{marginBottom: '2rem'}}
-                onClick={this.toggle}>
-                    Add Item
-                </Button>
-
-                <Modal
-                isOpen={this.state.modal}
-                toggle={this.toggle}>
-                    <ModalHeader toggle={this.toggle}>Add to To-do List</ModalHeader>
-                    <ModalBody>
-                        <Form onSubmit={this.onSubmit}>
-                            <FormGroup>
-                                <Label for="item">Item</Label>
-                                <Input 
-                                type = "text"
-                                name="name"
-                                id="item"
-                                placeholder="Add task"
-                                onChange={this.onChange}/>
-                                <Button color="dark"  style={{marginTop: '2rem'}} block>
-                                    Add Item
-                                </Button>
-                            </FormGroup>
-                        </Form>
-                    </ModalBody>
-                </Modal>
-            </div>
-        )
-    }
-}
-
-const mapStateToProps = state => ({
-    item: state.item
-});
-
-export default connect(mapStateToProps, { addItem })(ItemModal);
+export default ItemModal;
