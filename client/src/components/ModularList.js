@@ -1,61 +1,45 @@
-import React, { Component } from 'react';
-import {
-    Container, 
-    ListGroup,
-    ListGroupItem,
-    Button
-} from 'reactstrap';
+import React, { useEffect } from 'react';
+import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { getItems, deleteItem } from '../actions/itemActions';
-import PropTypes from 'prop-types';
 
-class ModularList extends Component {
-    componentDidMount() {
-        this.props.getItems();
-    }
+export const ModularList = () => {
+  const items = useSelector(state => state.item.items);
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 
-    onDeleteClick = (id) => {
-        this.props.deleteItem(id);
-    }
+  useEffect(() => {
+    dispatch(getItems());
+  }, [dispatch]);
 
-    render() {
-        const { items } = this.props.item;
-        return (
-            <Container>
-                <ListGroup>
-                    <TransitionGroup className='modular-list'>
-                        {items.map(({ _id, name}) => ( 
-                            <CSSTransition key={_id} timeout={500} classNames="fade">
-                                <ListGroupItem>
-                                    <Button 
-                                        className="remove-btn"
-                                        color="danger"
-                                        size="sm"
-                                        onClick={this.onDeleteClick.bind(this, _id)}>
-                                        &times;
-                                    </Button>
-                                    {name}
-                                </ListGroupItem>
-                            </CSSTransition>
-                        ))}
-                    </TransitionGroup>
-                </ListGroup>
-            </Container>
-        );
-    }
-}
+  return (
+    <Container>
+      <ListGroup>
+        <TransitionGroup className="shopping-list">
+          {items.map(({ _id, name }) => (
+            <CSSTransition key={_id} timeout={500} classNames="fade">
+              <ListGroupItem>
+                {isAuthenticated ? (
+                  <Button
+                    className="remove-btn"
+                    color="danger"
+                    size="sm"
+                    onClick={() => {
+                      dispatch(deleteItem(_id));
+                    }}
+                  >
+                    &times;
+                  </Button>
+                ) : null}
+                {name}
+              </ListGroupItem>
+            </CSSTransition>
+          ))}
+        </TransitionGroup>
+      </ListGroup>
+    </Container>
+  );
+};
 
-ModularList.propTypes = {
-    getItems: PropTypes.func.isRequired,
-    item: PropTypes.object.isRequired   //maps Redux state to prop
-}
-
-const mapStatetoProps = (state) => ({
-    item: state.item
-});
-
-export default connect(
-    mapStatetoProps, 
-    { getItems, deleteItem }
-)(ModularList);
+export default ModularList;
