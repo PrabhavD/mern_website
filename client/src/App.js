@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import './App.css';
 import AppNavBar from './components/AppNavbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ShoppingList from './components/ShoppingList';
+import ModularList from './components/ModularList';
 import { Provider } from 'react-redux';
 import store from './store';
 import { Container } from 'reactstrap';
@@ -20,7 +20,7 @@ function App() {
         <AppNavBar />
         <Container>
           <ItemModal />
-          <ShoppingList />
+          <ModularList />
         </Container>
       </div>
     </Provider>
