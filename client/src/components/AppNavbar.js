@@ -47,7 +47,7 @@ const AppNavbar = props => {
     <div>
       <Navbar color="dark" dark expand="sm" className="mb-5">
         <Container>
-          <NavbarBrand href="/">ShoppingList</NavbarBrand>
+          <NavbarBrand href="/">ModularList</NavbarBrand>
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
             <Nav className="ml-auto" navbar>
