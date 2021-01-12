@@ -1,7 +1,9 @@
-const config = require('config')
+const config = require('../config')
 const jwt = require('jsonwebtoken')
 
-function auth(req, res, next) {
+const { JWT_SECRET } = config;
+
+export default (req, res, next) => {
     const token = req.header('x-auth-token');
 
     //Check for token            //401 Status: User unauthorized

@@ -44,11 +44,11 @@ router.post('/', (req, res) => {
                                 }
                             });
                         }
-                    );
-                });
+                    )
+                })
 
 
-        });
+        })
 });
 
 // route:           GET request to api/auth/user

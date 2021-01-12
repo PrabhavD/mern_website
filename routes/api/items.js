@@ -30,8 +30,9 @@ router.post('/', auth, (req, res) => {
 // access:          Private
 router.delete('/:id', auth, (req, res) => {
     Item.findById(req.params.id)
-        .then(item => item.remove().then(() => res.json({success: true})))
-        .catch(err => res.status(404).json({sucess: false}));
+        .then(item => item.remove())
+        .then(() => res.json({deleted: true}))
+        .catch(err => res.status(404).json({deleted: false}));
 });
 
 module.exports = router;
