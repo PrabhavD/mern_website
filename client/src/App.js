@@ -1,30 +1,35 @@
-import React, { useEffect } from 'react';
-import './App.css';
-import AppNavBar from './components/AppNavbar';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { Component } from 'react';
+import AppNavBar from './components/AppNavBar';
 import ModularList from './components/ModularList';
+import ItemModal from './components/ItemModal';
+import { Container } from 'reactstrap';
+
 import { Provider } from 'react-redux';
 import store from './store';
-import { Container } from 'reactstrap';
-import { ItemModal } from './components/ItemModal';
 import { loadUser } from './actions/authActions';
 
-function App() {
-  useEffect(() => {
-    store.dispatch(loadUser());
-  }, []);
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
 
-  return (
-    <Provider store={store}>
+class App extends Component {
+
+  componentDidMount() {
+    store.dispatch(loadUser());
+  }
+  
+  render() {
+    return (
+      <Provider store={store}>
       <div className="App">
         <AppNavBar />
         <Container>
-          <ItemModal />
-          <ModularList />
+        <ItemModal />
+        <ModularList />
         </Container>
       </div>
-    </Provider>
-  );
+      </Provider>
+    );
+  }
 }
 
 export default App;
