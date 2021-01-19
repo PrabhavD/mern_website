@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import AppNavBar from './components/AppNavBar';
+import AppNavBar from './components/AppNavbar';
 import ModularList from './components/ModularList';
 import ItemModal from './components/ItemModal';
 import { Container } from 'reactstrap';
